@@ -30,5 +30,5 @@ This is a RESTful Web API built with .NET 8.0 that integrates with the external 
 1. **Clone the Repository**
 
 ```bash
-git clone https://github.com/your-username/product-api.git
+git clone https://github.com/Ekwughafranklin/TrueStory.git
 cd product-api
