@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace TrueStory.Domain.Dtos
 {
+
+    //Dto to get products
     public class GetProductsDto
     {
         public string name { get; set; }

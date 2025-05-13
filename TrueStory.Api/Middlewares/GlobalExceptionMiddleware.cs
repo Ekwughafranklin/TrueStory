@@ -8,6 +8,8 @@ namespace TrueStory.Api.Middlewares;
 
 public static class GlobalExceptionMiddleware
 {
+
+    //global exception middleware to handle custome exceptions
     public static void UseGlobalExceptionMiddleware(this WebApplication app)
     {
         app.UseExceptionHandler(appBuilder =>
@@ -31,11 +33,13 @@ public static class GlobalExceptionMiddleware
 
                     switch (exception)
                     {
+                        //this handles invalid requestd and returns 400 error
                         case InvalidRequestException requestException:
                             statusCode = requestException?.StatusCode ?? 400;
                             message = exception.Message;
                             errors = requestException?.Errors.ToList();
                             break;
+                            // this handles bad requests
                         case ValidationException validationException:
                             statusCode = StatusCodes.Status400BadRequest;
                             message = "Validation errors occurred.";
@@ -44,6 +48,7 @@ public static class GlobalExceptionMiddleware
                             statusCode = StatusCodes.Status400BadRequest;
                             message = "A required argument was null.";
                             break;
+                            // this handles 401, unauthorized access
                         case UnauthorizedAccessException:
                             statusCode = StatusCodes.Status401Unauthorized;
                             message = "You are not authorized to perform this action.";
@@ -52,6 +57,7 @@ public static class GlobalExceptionMiddleware
                             statusCode = StatusCodes.Status404NotFound;
                             message = "The requested resource was not found.";
                             break;
+                            //default handles 500 error
                         default:
                             statusCode = StatusCodes.Status500InternalServerError;
                             message = $"An unexpected error occurred.";

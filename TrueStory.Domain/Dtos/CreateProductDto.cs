@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 namespace TrueStory.Domain.Dtos
 {
+
+    //Dto to create products
     public class CreateProductDto
     {
         [Required]

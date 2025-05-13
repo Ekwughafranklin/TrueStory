@@ -23,33 +23,39 @@ namespace TrueStory.Application.Services
             _httpClient = httpClient;
         }
 
-        public async Task<IEnumerable<Product>> GetAllAsync(GetProductsDto request)
+        public async Task<PaginatedResponse<Product>> GetAllAsync(GetProductsDto request)
         {
+            // http call to get all products
             var response = await _httpClient.GetStringAsync(_baseUrl);
             var items = JArray.Parse(response);
-
+            // filter if name is provided and ignore case
             var filtered = items
                 .Where(item => string.IsNullOrEmpty(request.name) ||
                                item["name"]?.ToString().Contains(request.name, StringComparison.OrdinalIgnoreCase) == true)
                 .Skip((request.page - 1) * request.pageSize)
                 .Take(request.pageSize)
+                //project to product response
                 .Select(item => new Product
                 {
                     Id = item["id"]?.ToString(),
                     Name = item["name"]?.ToString(),
+                    //dictionary to handle customer key and value
                     Data = item["data"]?.ToObject<Dictionary<string, object>>()
                 });
-
-            return filtered;
+            // returns paginated response
+            var result= filtered.ToPaginatedResponse<Product>(request.page, request.pageSize);
+            return result;
         }
 
         public async Task<HttpResponseMessage> CreateAsync(CreateProductDto productDto)
         {
+            // project to dto fro requrest
             var payload = new
             {
                 name = productDto.Name,
                 data = productDto.Data
             };
+            //returns api response
             return await _httpClient.PostAsJsonAsync(_baseUrl, payload);
         }
 

@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 namespace TrueStory.Domain.Dtos;
 
+
+//Response Dto with standard responses
 public class ApiResponseDto<T>
 {
     public bool Success { get; set; } = true;

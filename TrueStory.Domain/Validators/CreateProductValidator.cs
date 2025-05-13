@@ -8,6 +8,8 @@ using TrueStory.Domain.Dtos;
 
 namespace TrueStory.Domain.Validators;
 
+
+//fluent style validator for request dtos
 public class CreateProductValidator : AbstractValidator<CreateProductDto>
 {
     public CreateProductValidator()

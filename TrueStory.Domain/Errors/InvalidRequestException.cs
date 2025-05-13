@@ -8,6 +8,7 @@ using TrueStory.Domain.Dtos;
 
 namespace TrueStory.Domain.Errors;
 
+//standard helper class to handle 40 type error thrown from code
 public class InvalidRequestException : Exception
 {
     public int StatusCode { get; set; } = 400;
